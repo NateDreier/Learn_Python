@@ -2,9 +2,7 @@
 
 Tryna learn some Python
 
-files with AtBS == Automate the Boring Stuff
-
-files with VP == Violent Python 
+naming convention is `chapter#_programName.py`
 
 ## notes
 
