@@ -1,8 +1,10 @@
 #!/usr/bin/python3.6
 # @ me robert.
-# Chapter 1 went over basic print statements, operators, assignments, and data types.
-from datetime import datetime
-from dateutil import relativedelta
+# Chapter 1 of Automate the Boring Stuff (AtBS) 
+# Went over basic print statements, operators, assignments, and data types.
+
+# from datetime import datetime
+# from dateutil import relativedelta
 
 print('[+] Hello friend, what is your name?')
 yourName = input()
