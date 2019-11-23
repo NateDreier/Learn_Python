@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
-#@ me robert.
-
+# @ me robert.
+# Chapter 1 went over basic print statements, operators, assignments, and data types.
 from datetime import datetime
 from dateutil import relativedelta
 
