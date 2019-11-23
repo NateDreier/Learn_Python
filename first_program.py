@@ -7,7 +7,7 @@ from dateutil import relativedelta
 print('[+] Hello friend, what is your name?')
 yourName = input()
 
-print('[+]Your name is ' + yourName) 
+print('[+] Your name is ' + yourName) 
 lengthOfName = len(yourName)
 
 print('[+] Super fun fact, your name is ' + str(lengthOfName) + ' characters long')
