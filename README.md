@@ -1,6 +1,8 @@
-# Automate the Boring Stuff
+# Learn Python 
 
-Working through Autoamte the Boring stuff
+Tryna learn some Python
+files with AtBS == Automate the Boring Stuff
+files with VP == Violent Python 
 
 ## notes
 
