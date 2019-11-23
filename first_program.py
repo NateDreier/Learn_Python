@@ -4,18 +4,18 @@
 from datetime import datetime
 from dateutil import relativedelta
 
-print('hello friend, what is your name?')
+print('[+] Hello friend, what is your name?')
 yourName = input()
 
-print('Your name is ' + yourName) 
+print('[+]Your name is ' + yourName) 
 lengthOfName = len(yourName)
 
-print('super fun fact, your name is ' + str(lengthOfName) + ' characters long')
+print('[+] Super fun fact, your name is ' + str(lengthOfName) + ' characters long')
 
-print('How old are you?')
+print('[+] How old are you?')
 age = input()
 
-print('cool age bro, you\'ll be ' + str(int(age) + 1) + ' in a year')
+print('[+] Cool age bro, you\'ll be ' + str(int(age) + 1) + ' in a year')
 
 
 #print('when is your birthday?')
