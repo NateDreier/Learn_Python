@@ -1,7 +1,9 @@
 # Learn Python 
 
 Tryna learn some Python
+
 files with AtBS == Automate the Boring Stuff
+
 files with VP == Violent Python 
 
 ## notes
