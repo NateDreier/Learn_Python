@@ -13,9 +13,9 @@ def retBanner(ip, port):
 		 print('[-] Error ' + str(e))
 
 def checkVulns(banner):
-	f = open('vuln_banners.txt','rb')
+	f = open('vuln_banners.txt','r')
 	for line in f.readlines():
-		if line.strip('b\n') in banner:
+		if line.strip('\n') in banner:
 			print('[+] Server is vulnerable: ' + banner.strip('\n'))
 
 
@@ -24,7 +24,7 @@ def main():
 	for x in range(127, 130):
 		ip = '192.168.101.' + str(x)
 		for port in portList:
-			banner = retBanner(ip, port)
+			banner = str(retBanner(ip, port))
 			if banner:
 				print('[+] ' + str(ip) + ': ' + str(banner))
 				checkVulns(banner)
@@ -33,8 +33,3 @@ def main():
 # https://www.geeksforgeeks.org/what-does-the-if-__name__-__main__-do/
 if __name__ == '__main__':
   main()
-
-####
-# Things to improve:
-# if running a scan against a range, add a block of code to see which IP addresses are
-# able to be hit and which aren't. I don't actually know if that is a good idea or not
