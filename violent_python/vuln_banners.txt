@@ -1,0 +1,4 @@
+SSH Tectia Server 5.0.0
+SSH Secure Shell 3.0.0
+b'SSH-2.0-OpenSSH_7.4\r\n'
+#SSH-2.0-OpenSSH_7.4
