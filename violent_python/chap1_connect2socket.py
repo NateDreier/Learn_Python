@@ -20,9 +20,9 @@ def checkVulns(banner):
 
 
 def main():
-	portList = [22]
-	for x in range(127, 130):
-		ip = '192.168.101.' + str(x)
+	portList = [80]
+	for x in range(196, 198):
+		ip = '100.26.199.' + str(x)
 		for port in portList:
 			banner = str(retBanner(ip, port))
 			if banner:
