@@ -1,13 +1,22 @@
 #!/usr/bin/python3.6
-
+# thnks realpython.org/socket-something...
+# now I need to figure out a way to write it on my own.....
 import socket
 
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# 100.26.199.197, temp ec2
-serversocket.bind(('localhost', 2289))
-serversocket.listen(5)
+HOST = '173.79.164.188'
+PORT = 2289
 
-(clientsocket, address) = serversocket.accept()
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+	s.bind((HOST, PORT))
+	s.listen()
+	conn, addr = s.accept()  # Need to understand this line better
+	while conn:
+		print('Connected by ' + str(addr))
+		while True:
+			data = conn.recv(1024)
+			if not True:
+				break
+			conn.sendall(data.upper())
 
 #add recv
 #need 2 loops

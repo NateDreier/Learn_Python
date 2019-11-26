@@ -2,7 +2,12 @@
 
 import socket
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('python.org', 80))    #this will need to be to the server.`
+HOST = '127.0.0.1'
+PORT = 2289
 
-#for this project they will both need to be 'servers', sending and receiving.
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+	s.connect((HOST, PORT))
+	s.sendall(b'Hello friends')
+	data = s.recv(1024)  # What are pros and cons of bigger or smaller
+
+print('Received ' + str(data))
