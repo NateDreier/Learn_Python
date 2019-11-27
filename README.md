@@ -9,6 +9,8 @@ naming convention is `chapter#_programName.py`
 
 Challenge 2: TCP Echo server. Write a server which reads off a socket, capitalizes all the text sent to it and then sends it back to the client.
 
+Challenge 2.5: Create a chat room that accepts multiple connections, clients log in, keeping it simple, have a .txt with the password (plaintext, encrypted, w/e), broadcasts the messages out when they are sent to everyone.
+
 ## notes
 
 The goal of this is to get a better grasp on Python, learn best practices, formatting and more. I hope to improve my Python as well as git best practices, starting off with the README.
