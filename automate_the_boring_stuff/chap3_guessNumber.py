@@ -1,22 +1,27 @@
 #!/usr/bin/python3.6
 import random
 
-def number_guess():
-    number = random.randint(1, 10)
-    guess = 0
-    while isinstance(guess, int):
-        print('I\'m thinking of a number between 1 and 10, what is it?')
-        guess = int(input())
-        if guess < number:
+number = random.randint(1, 10)
+def is_numba_numba():
+    while True:
+        try:
+            guess = int(input('numba plz \n'))
+        except ValueError:
+            print('not a int, ya dope')
+            continue
+        else:
+            return guess
+
+def compare_numbas(n):
+    while True:
+        g = is_numba_numba()
+        if g < n:
             print('guess is too low!')
-        elif guess > number:
+        elif g > n:
             print('guess is too high!')
         else:
             print("wow nice guess, that's it")
             break
-    else:
-        print('please input an integer')
 
-number_guess()
-
-         
+print('I am thinking of a number between 1 and 10')
+compare_numbas(number)
