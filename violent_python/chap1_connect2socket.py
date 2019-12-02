@@ -35,7 +35,6 @@ def checkVulns(banner):
 
 def main():
 	check_file()
-	f = sys.argv[1]
 	portList = [22]
 	for x in range(128, 130):
 		ip = '192.168.101.' + str(x)
