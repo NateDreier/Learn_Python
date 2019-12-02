@@ -2,19 +2,21 @@
 import random
 
 number = random.randint(1, 10)
-def is_numba_numba():
+def check_number():
     while True:
         try:
             guess = int(input('numba plz \n'))
         except ValueError:
             print('not a int, ya dope')
             continue
+        if guess > 10 or guess < 1:
+            print('the number must be in the correct range')
         else:
             return guess
 
 def compare_numbas(n):
     while True:
-        g = is_numba_numba()
+        g = check_number()
         if g < n:
             print('guess is too low!')
         elif g > n:
