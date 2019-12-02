@@ -7,7 +7,7 @@ naming convention is `chapter#_programName.py`
 ## Challenges
 [COMPLETE] Challenge 1: First challenge to work up to is FizzBuzz, print the numbers one through thirty. If a number is divisible by 3, instead print Fizz if a number is divisible by 5, print Buzz.
 
-Challenge 2: TCP Echo server. Write a server which reads off a socket, capitalizes all the text sent to it and then sends it back to the client.
+[COMPLETE] Challenge 2: TCP Echo server. Write a server which reads off a socket, capitalizes all the text sent to it and then sends it back to the client.
 
 Challenge 2.5: Create a chat room that accepts multiple connections, clients log in, keeping it simple, have a .txt with the password (plaintext, encrypted, w/e), broadcasts the messages out when they are sent to everyone.
 
