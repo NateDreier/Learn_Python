@@ -12,7 +12,8 @@ def check_file():
 			exit(0)
 		if not os.access(filename, os.R_OK):
 			print('[-] ' + filename + ' access denied.')
-		print('[+] Reading vulnerabilities from ' + filename)	
+		# print('[+] Reading vulnerabilities from ' + filename)
+	return filename
 
 def retBanner(ip, port):
 	 try:
@@ -25,7 +26,8 @@ def retBanner(ip, port):
 		 print('[-] Error ' + str(e))
 
 def checkVulns(banner):
-	f = open('vuln_banners.txt','r')
+	filename = check_file()
+	f = open(filename,'r')
 	for line in f.readlines():
 		if line.strip('\n') in banner:
 			print('[+] Server is vulnerable: ' + banner.strip('\n'))
@@ -33,6 +35,7 @@ def checkVulns(banner):
 
 def main():
 	check_file()
+	f = sys.argv[1]
 	portList = [22]
 	for x in range(128, 130):
 		ip = '192.168.101.' + str(x)
