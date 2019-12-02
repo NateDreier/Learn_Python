@@ -4,14 +4,15 @@ import socket
 import sys
 import os
 
-if len(sys.argv) == 2:
-	filename = sys.argv[1]
-	if not os.path.isfile(filename):
-		print('[-] ' + filename + ' does not exist.')
-		exit(0)
-	if not os.access(filename, os.R_OK):
-		print('[-] ' + filename + ' access denied.')
-	print('[+] Reading vulnerabilities from ' + filename)	
+def check_file():
+	if len(sys.argv) == 2:
+		filename = sys.argv[1]
+		if not os.path.isfile(filename):
+			print('[-] ' + filename + ' does not exist.')
+			exit(0)
+		if not os.access(filename, os.R_OK):
+			print('[-] ' + filename + ' access denied.')
+		print('[+] Reading vulnerabilities from ' + filename)	
 
 def retBanner(ip, port):
 	 try:
@@ -31,6 +32,7 @@ def checkVulns(banner):
 
 
 def main():
+	check_file()
 	portList = [22]
 	for x in range(128, 130):
 		ip = '192.168.101.' + str(x)
