@@ -1,6 +1,17 @@
 #!/usr/bin/python3.6
 
 import socket
+import sys
+import os
+
+if len(sys.argv) == 2:
+	filename = sys.argv[1]
+	if not os.path.isfile(filename):
+		print('[-] ' + filename + ' does not exist.')
+		exit(0)
+	if not os.access(filename, os.R_OK):
+		print('[-] ' + filename + ' access denied.')
+	print('[+] Reading vulnerabilities from ' + filename)	
 
 def retBanner(ip, port):
 	 try:
@@ -20,16 +31,14 @@ def checkVulns(banner):
 
 
 def main():
-	portList = [80]
-	for x in range(196, 198):
-		ip = '100.26.199.' + str(x)
+	portList = [22]
+	for x in range(128, 130):
+		ip = '192.168.101.' + str(x)
 		for port in portList:
 			banner = str(retBanner(ip, port))
 			if banner:
 				print('[+] ' + str(ip) + ': ' + str(banner))
 				checkVulns(banner)
 
-# the below link explains pretty well why you need and would want the below code
-# https://www.geeksforgeeks.org/what-does-the-if-__name__-__main__-do/
 if __name__ == '__main__':
   main()
