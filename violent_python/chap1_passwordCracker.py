@@ -19,5 +19,4 @@ def hack_a_pass(passpass):
 def main():
     file = check_file()
     f = open(filename, r)
-    
         
