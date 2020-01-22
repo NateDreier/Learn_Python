@@ -11,6 +11,6 @@ Figure out what the cheapest method to ship a package is. There are three method
 This Program will determine which method, based on cost is the best way to ship.
 
 ## Challenge 2
-Create a function that takes in a list (list will be x) and a number (number will be y), we want y to be the index in the list and to multiple whatever number is at y by two.
+There are a couple of list editing challenges, hopefully the code suffices to get an idea what I am trying to do.
 
-For some reason this problem really had me struggling. I came up with a solution but I really do not like it.
+For some reason these problems really had me struggling. I came up with a solution but I really do not like it.
