@@ -36,9 +36,22 @@ def more_than(lst, item1, item2):
         return("item2 wins " + str(item2))
     else:
         return("it is a tie")
+
+# return the middle element of lst if it is odd, take the middle two elements and average them together if even
+def this_is_gross(lst):
+    if len(lst) % 2 != 0:
+        return(lst[int(len(lst)/2)])
+    else:
+        dis_sux = (lst[int(len(lst)/2)] + lst[int(len(lst)/2) - 1]) / 2
+        return(dis_sux)
+
     
 
 print(list_editor([1, 2, 3, 4, -12, 6], 4))
 print(remove_middle([1, 2, 3, 4 ,22, 34, 5], 1, 3))
 print(more_than_n([1, 2, 3, 4, 4, 4, 5], 4, 2))
 print(more_than([1, 1, 2, 2, 2, 3, 4], 1, 2))
+# odd
+print(this_is_gross([1, 2, 3, 4, 4, 5, 6]))
+# even
+print(this_is_gross([1, 2, 3, 4, 12, 5, 6, 7]))
