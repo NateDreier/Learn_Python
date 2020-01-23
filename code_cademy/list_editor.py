@@ -27,8 +27,18 @@ def more_than_n(lst, item, n):
         return True
     else:
         return False
+
+# Return which item appears the most in lst
+def more_than(lst, item1, item2):
+    if lst.count(item1) > lst.count(item2):
+        return("item1 wins " + str(item1))
+    elif lst.count(item2) > lst.count(item1):
+        return("item2 wins " + str(item2))
+    else:
+        return("it is a tie")
     
 
 print(list_editor([1, 2, 3, 4, -12, 6], 4))
 print(remove_middle([1, 2, 3, 4 ,22, 34, 5], 1, 3))
 print(more_than_n([1, 2, 3, 4, 4, 4, 5], 4, 2))
+print(more_than([1, 1, 2, 2, 2, 3, 4], 1, 2))
