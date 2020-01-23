@@ -51,7 +51,11 @@ def num_dum(lst, n):
     for i in range(n):
         lst.append((int(lst[-1]) + int(lst[-2])))
     return(lst)
-    
+
+def sortysort_sort(lst1, lst2):
+    new_list = lst1 + lst2
+    new_list.sort()
+    return(new_list)    
 
 print(list_editor([1, 2, 3, 4, -12, 6], 4))
 print(remove_middle([1, 2, 3, 4 ,22, 34, 5], 1, 3))
@@ -62,3 +66,4 @@ print(this_is_gross([1, 2, 3, 4, 4, 5, 6]))
 # even
 print(this_is_gross([1, 2, 3, 4, 12, 5, 6, 7]))
 print(num_dum([1, 2, 3], 3))
+print(sortysort_sort([1, 3, 5, 7], [0, 2, 4, 6]))
