@@ -45,6 +45,12 @@ def this_is_gross(lst):
         dis_sux = (lst[int(len(lst)/2)] + lst[int(len(lst)/2) - 1]) / 2
         return(dis_sux)
 
+# function that takes in a list(lst), appends the sum of the last two elements and does that n times
+
+def num_dum(lst, n):
+    for i in range(n):
+        lst.append((int(lst[-1]) + int(lst[-2])))
+    return(lst)
     
 
 print(list_editor([1, 2, 3, 4, -12, 6], 4))
@@ -55,3 +61,4 @@ print(more_than([1, 1, 2, 2, 2, 3, 4], 1, 2))
 print(this_is_gross([1, 2, 3, 4, 4, 5, 6]))
 # even
 print(this_is_gross([1, 2, 3, 4, 12, 5, 6, 7]))
+print(num_dum([1, 2, 3], 3))
