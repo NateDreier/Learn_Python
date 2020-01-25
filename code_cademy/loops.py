@@ -19,10 +19,18 @@ def listception(lst):
             ttl += j
     return(ttl)
 
+# learning more efficient ways, I think?
 def cool_stuff(lst):
     new_lst = [l for l in lst if l > 2]
     return(new_lst)
 
+# Celsius to Fahrenheit
+def c_to_f(celsius):
+    fahrenheit = [c * 9/5 + 32 for c in celsius]
+    return(fahrenheit)
+
+
 print(poppin_lists([1, 2, 3, 4, 3, 2, 1], 4))
 print(listception([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
 print(cool_stuff([1, 2, 3, 4, 3, 2, 1]))
+print(c_to_f([1, 3, 5, 30, 2]))
