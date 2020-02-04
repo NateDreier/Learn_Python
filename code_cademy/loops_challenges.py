@@ -70,6 +70,13 @@ def one_thou(lst):
     else:
         return(sum)
 
+# function that takes in a list and returns the largest element
+def max_num(nums):
+  maximum = 0
+  for i in nums:
+    if i > big:
+      big = i
+  return(big)
 
 print(div_by_ten([10, 15, 20, 10, 30, 45, 32]))
 print(namuh([nate, sophie, lily, emma]))
@@ -78,3 +85,4 @@ print(odd_indicies[1, 2, 3, 4, 5, 6, 7])
 print(exponents([1, 2, 3], [4, 5, 6]))
 print(summ([1, 4, 7, 4], [12, 0, 3, 2]))
 print(one_thou([800, 20, 30, 46, 100, 150, 100, 200]))
+print(max_num([1, 345, 2, 3, 21, 3455])
