@@ -48,7 +48,27 @@ def summ(lst1, lst2):
         return(lst2)
     else:
         return(lst1)
+#orr....
+def larger_sum(lst1, lst2):
+    if sum(lst1) > sum(lst2):
+        return(lst1)
+    elif sum(lst2) > sum(lst1):
+        return(lst2)
+    else:
+        return(lst1)
 
+# function that takes in a list and sums it up to one thousand and stops. returns that number. if list never reaches 1000, return 0.
+def one_thou(lst):
+    sum = 0
+    for i in lst:
+        if sum > 9000:
+            break
+        else:
+            sum += i
+    if sum < 9000:
+        return(0)
+    else:
+        return(sum)
 
 
 print(div_by_ten([10, 15, 20, 10, 30, 45, 32]))
@@ -57,3 +77,4 @@ print(delete_even([2, 2, 30, 4, 5, 6, 7])
 print(odd_indicies[1, 2, 3, 4, 5, 6, 7])
 print(exponents([1, 2, 3], [4, 5, 6]))
 print(summ([1, 4, 7, 4], [12, 0, 3, 2]))
+print(one_thou([800, 20, 30, 46, 100, 150, 100, 200]))
