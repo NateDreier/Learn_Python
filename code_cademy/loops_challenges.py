@@ -38,9 +38,22 @@ def exponents(base, powers):
             powa.append(i ** j)
     return(powa)
 
+# function that takes two lists, sums the total of the elements in each list and returns which list is greater if tied return lst1
+def summ(lst1, lst2):
+    a = sum(lst1)
+    b = sum(lst2)
+    if a > b:
+        return(lst1)
+    elif b > a:
+        return(lst2)
+    else:
+        return(lst1)
+
+
 
 print(div_by_ten([10, 15, 20, 10, 30, 45, 32]))
 print(namuh([nate, sophie, lily, emma]))
 print(delete_even([2, 2, 30, 4, 5, 6, 7])
 print(odd_indicies[1, 2, 3, 4, 5, 6, 7])
 print(exponents([1, 2, 3], [4, 5, 6]))
+print(summ([1, 4, 7, 4], [12, 0, 3, 2]))
