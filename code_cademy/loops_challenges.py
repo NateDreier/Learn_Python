@@ -16,5 +16,12 @@ def namuh(names):
     return(greetings)
 
 
+def delete_even(lst):
+    while (len(lst) > 0 and lst[0] % 2 == 0):
+        lst = lst[1]
+    return(lst)
+
+
 print(div_by_ten([10, 15, 20, 10, 30, 45, 32]))
 print(namuh([nate, sophie, lily, emma]))
+print(delete_even([2, 2, 30, 4, 5, 6, 7])
