@@ -44,6 +44,9 @@ add_attraction("Sao Paulo, Brazil", ["Pátio do Colégio", ["historical site"]])
 add_attraction("Cairo, Egypt", ["Egyptian Museum", ["museum"]])
 add_attraction("Cairo, Egypt", ["Pyramids of Giza", ["monument", "historical site"]])
 
+
+#####
+#I need to fiddle aroudn with the for loops because I am getting duplicate results causing multiples of the same in my list.
 def find_attraction(destinations, interests):
     attractions_in_city = attractions[get_destination_index(destinations)]
     attractions_with_interest = []
@@ -61,5 +64,6 @@ def find_attraction(destinations, interests):
         test1 = attraction_tags.index(i)
         if i[0] == interests:
         test.append(possible_attractions[attraction_tags.index(i)])
+        possible_attractions.append(possible_attractions[attraction_tags.index(i)])
     return(test)
 print(find_attraction("Paris, France", "art"))
