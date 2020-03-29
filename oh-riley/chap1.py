@@ -27,3 +27,12 @@ for i in people: print(i[2])
 
 pays = map((lambda i: i[2]), people)
 print(list(pays))
+print("\n")
+
+print(sum(i[2] for i in people))
+
+people.append(['nate theGreat', 12, 20000, 'wannabedev'])
+for i in people: print(i)
+
+
+
