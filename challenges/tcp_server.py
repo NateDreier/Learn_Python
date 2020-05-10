@@ -1,20 +1,48 @@
 #!/usr/bin/python3.6
-import socket
 
-HOST = ''
-PORT = 2289
+import socket # Look into the socket module: page 781 of py book.
+import threading # Look into the threading module
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-	s.bind((HOST, PORT))
-	s.listen()
-	conn, addr = s.accept()  # Need to understand this line better
-	while conn:
-		full_msg =b''
-		print('Connected by ' + str(addr))
-		while True:
-			data = conn.recv(8)
-			full_msg += data
-			if not True:
-				break
-			conn.sendall(full_msg.upper())
+PORT = 6969
+SERVER = socket.gethostbyname(socket.gethostname())
+ADDR = (SERVER, PORT)
+#print(SERVER)
+HEADER = 64
+FORMAT = 'utf-8'
+DISCONNECT_MESSAGE = "gbye"
 
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(ADDR)
+
+def handle_client(conn, addr):
+  print(f"[+] New Connection {addr} connected.")
+  connected = True
+  while connected:
+    msg_length = conn.recv(HEADER).decode(FORMAT)
+    if msg_length:
+      msg_length = int(msg_length)
+      msg = conn.recv(msg_length).decode(FORMAT)
+      if msg == DISCONNECT_MESSAGE:
+        connected = False
+      print(f"[+] {addr}: {msg}")
+      conn.send("got the message compadre".encode(FORMAT))
+  conn.close()
+  print(f"[-] Active Connections Dropped: {threading.activeCount() - 2}")
+ 
+    
+
+def start():
+  server.listen()
+  print(f"[+] Server is listening on {SERVER}:{PORT}")
+  while True: 
+    conn, addr = server.accept()
+    thread = threading.Thread(target=handle_client, args=(conn, addr)) 
+    thread.start()
+    print(f"[+] Active Connections:  {threading.activeCount() - 1}")
+
+try: 
+  print("[+] Server starting")
+  start()
+except KeyboardInterrupt:
+  exit()

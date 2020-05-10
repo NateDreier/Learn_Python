@@ -1,13 +1,32 @@
-#!/usr/bin/python3.6
+#!/usr/bin/env python3
 
 import socket
+import threading
 
-HOST = '127.0.0.1'
-PORT = 2289
+PORT = 6969
+SERVER = socket.gethostbyname(socket.gethostname())
+ADDR = (SERVER, PORT)
+#print(SERVER)
+HEADER = 64
+FORMAT = 'utf-8'
+DISCONNECT_MESSAGE = "gbye"
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-	s.connect((HOST, PORT))
-	s.sendall(b'Hello friends')
-	data = s.recv(8)  # What are pros and cons of bigger or smaller
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(ADDR)
 
-print('Received ' + str(data))
+def send(msg):
+  message = msg.encode(FORMAT)
+  msg_length = len(message)
+  send_length = str(msg_length).encode(FORMAT)
+  send_length += b' ' * (HEADER - len(send_length))
+  client.send(send_length)
+  client.send(message)
+  print(client.recv(2048).decode(FORMAT))
+
+try: 
+  while True:
+    send(input())
+except KeyboardInterrupt:
+  send(DISCONNECT_MESSAGE)
+  exit() 
+
