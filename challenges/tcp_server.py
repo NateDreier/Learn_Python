@@ -2,6 +2,8 @@
 
 import socket # Look into the socket module: page 781 of py book.
 import threading # Look into the threading module
+import pickle # Simpler way to handle encode/decode. Pickle handles serializing and de-serializing object structs
+
 
 PORT = 6969
 SERVER = socket.gethostbyname(socket.gethostname())
@@ -20,15 +22,26 @@ def handle_client(conn, addr):
   connected = True
   while connected:
     msg_length = conn.recv(HEADER).decode(FORMAT)
+#    msg_length = conn.recv(HEADER)
+#    message = pickle.loads(msg_length)
+#    msg_length = pickle.loads(conn.recv(HEADER))
+#    msg_length = conn.recv(pickle.loads(HEADER))
     if msg_length:
       msg_length = int(msg_length)
-      msg = conn.recv(msg_length).decode(FORMAT)
+#      msg = conn.recv(msg_length).decode(FORMAT)
+#      msg_length = int(message)
+      msg = conn.recv(pickle.dumps(msg_length))
       if msg == DISCONNECT_MESSAGE:
         connected = False
       print(f"[+] {addr}: {msg}")
-      conn.send("got the message compadre".encode(FORMAT))
+#      conn.send("got the message compadre".encode(FORMAT))
+#      pickle.dumps(conn.send("got the message compadre"))
+      conn.send(pickle.dumps("got message"))
+      message2 = "got the message compadre"
+      messagep = pickle.dumps(message2)
+      conn.send(messagep)
   conn.close()
-  print(f"[-] Active Connections Dropped: {threading.activeCount() - 2}")
+  print(f"[-] Connection dropped, Connection Count: {threading.activeCount() - 2}")
  
     
 

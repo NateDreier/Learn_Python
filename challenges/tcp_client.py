@@ -2,6 +2,7 @@
 
 import socket
 import threading
+import pickle
 
 PORT = 6969
 SERVER = socket.gethostbyname(socket.gethostname())
@@ -17,11 +18,14 @@ client.connect(ADDR)
 def send(msg):
   message = msg.encode(FORMAT)
   msg_length = len(message)
-  send_length = str(msg_length).encode(FORMAT)
+#  send_length = str(msg_length).encode(FORMAT)
+  send_length = pickle.dumps(msg_length)
   send_length += b' ' * (HEADER - len(send_length))
   client.send(send_length)
   client.send(message)
-  print(client.recv(2048).decode(FORMAT))
+
+  server_msg = pickle.loads(client.recv(2048))
+  print(server_msg)
 
 try: 
   while True:
