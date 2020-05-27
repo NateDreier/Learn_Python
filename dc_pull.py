@@ -9,10 +9,11 @@ import docker  # https://docker-py.readthedocs.io/en/stable/
 cli = docker.APIClient(base_url="unix://var/run/docker.sock")
 current_dir = os.getcwd()
 repository = sys.argv[2]
+tar_dir = os.path.join(current_dir, "move")
 
 
-if path.exists(os.path.join(current_dir, "move")) is not True:
-    os.mkdir(os.path.join(current_dir, "move"))
+if path.exists(tar_dir) is not True:
+    os.mkdir(tar_dir)
 
 
 def the_whole_shebang(image):
@@ -23,18 +24,18 @@ def the_whole_shebang(image):
 
     print(f"Pulling, retagging, saving and rmi'ing: {image}")
     # Pulls the container
-    cli.pull(f"{image}")
+    cli.pull(image)
     # Tags the container with the new tag
-    cli.tag(f"{image}", f"{repository}/{img}", f"{t}")
+    cli.tag(image, f"{repository}/{img}", t)
 
-    new_image_name = f"{image}.tar"
-    im = cli.get_image(f"{image}")
-    with open(os.path.join(current_dir, "move", new_image_name), "wb+") as f:
+    new_image_name = f"{img}{t}.tar"
+    im = cli.get_image(image)
+    with open(os.path.join(tar_dir, new_image_name), "wb+") as f:
         for chunk in im:
             f.write(chunk)
 
     # Deletes all downloaded images
-    cli.remove_image(f"{image}")
+    cli.remove_image(image)
     cli.remove_image(f"{repository}/{image}")
 
 
