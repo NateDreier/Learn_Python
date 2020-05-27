@@ -13,7 +13,7 @@ repository = sys.argv[2]
 
 
 if path.exists(os.path.join(current_dir, "move")) is not True:
-        os.mkdir(os.path.join(current_dir, "move"))
+    os.mkdir(os.path.join(current_dir, "move"))
 
 
 def the_whole_shebang(image):
@@ -27,20 +27,15 @@ def the_whole_shebang(image):
     # Tags the container with the new tag
     cli.tag(f"{img}:{t}", f"{repository}/{img}", f"{t}")
 
-    
     new_image_name = f"{img}{t}.tar"
-    im = cli.get_image(f"{repository}/{img}:{t}")
-    
-
+    im = cli.get_image(f"{img}:{t}")
     with open(os.path.join(current_dir, "move", new_image_name), 'wb+') as f:
-        for chunk in image:
+        for chunk in im:
             f.write(chunk)
 
-    
     # Deletes all downloaded images
-#    for i in cli.images():
-#    cli.remove_image(img_t, force=True)
-
+    cli.remove_image(f"{img}:{t}", force=True)
+    cli.remove_image(f"{repository}/{img}:{t}")
 
 with concurrent.futures.ProcessPoolExecutor() as executor:
     f = open(sys.argv[1], "r")
