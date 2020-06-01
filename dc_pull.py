@@ -39,7 +39,8 @@ def the_whole_shebang(image):
     cli.remove_image(f"{repository}/{image}")
 
 
-with concurrent.futures.ProcessPoolExecutor() as executor:
-    f = open(sys.argv[1], "r")
-    lines = f.readlines()
-    executor.map(the_whole_shebang, lines)
+if __name__ == "__main__":
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        f = open(sys.argv[1], "r")
+        lines = f.readlines()
+        executor.map(the_whole_shebang, lines)
