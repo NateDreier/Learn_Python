@@ -18,7 +18,6 @@ if path.exists(tar_dir) is not True:
 
 def the_whole_shebang(image: str):
     """TODO: add in logic to split out if there is "/", ports etc"""
-    """Takes in string, splits it out to image and tag"""
     img_t = image.split(":")
     img = img_t[0].strip()
     t = img_t[1].strip()
@@ -43,8 +42,6 @@ def the_whole_shebang(image: str):
 
 if __name__ == "__main__":
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        """Utilizes the concurrent.futures library to run this with multiprocess.
-        reads in the file and passes in each line to the_whole_shebang"""
         """TODO: pass in a string so that I can eliminate the redundant image var
         in the_whole_shebang function"""
         f = open(sys.argv[1], "r")
