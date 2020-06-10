@@ -11,6 +11,7 @@ import docker  # https://docker-py.readthedocs.io/en/stable/
 TODO: Take the below vars out of global
 TODO: Use Pathlib
 TODO: Use Argparse
+TODO: Make the code more reusable by sticking it all in a class.
 """
 cli = docker.APIClient(base_url="unix://var/run/docker.sock")
 current_dir = os.getcwd()
