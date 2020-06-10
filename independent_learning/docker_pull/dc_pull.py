@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import re
 import os
 from os import path
 import concurrent.futures  # https://docs.python.org/3/library/concurrent.futures.html
@@ -12,12 +13,11 @@ repository = sys.argv[2]
 tar_dir = os.path.join(current_dir, "move")
 
 
-if path.exists(tar_dir) is not True:
+if not path.exists(tar_dir):
     os.mkdir(tar_dir)
 
 
-def the_whole_shebang(image: str):
-    """TODO: add in logic to split out if there is "/", ports etc"""
+def simple_image(image: str):
     img_t = image.split(":")
     img = img_t[0].strip()
     t = img_t[1].strip()
@@ -40,10 +40,41 @@ def the_whole_shebang(image: str):
     cli.remove_image(f"{repository}/{image}")
 
 
+def complex_image(image: str):
+    img_t = image.split(":")
+    i = img_t[0].strip()
+    img_reg = i.split("/")
+    img = img_reg[1].strip()
+    t = img_t[1].strip()
+    image = f"{i}:{t}"
+    new_image = f"{repository}/docker-library/{image}"
+
+    print(f"Pulling, retagging, saving and rmi'ing: {image}")
+    # Pulls the container
+    cli.pull(image)
+    # Tags the container with the new tag
+    cli.tag(image, f"{repository}/docker-library/{i}", t)
+
+    print(f"tar'ing up {new_image}")
+    new_image_name = f"{img}{t}.tar"
+    im = cli.get_image(new_image)
+    with open(os.path.join(tar_dir, new_image_name), "wb+") as f:
+        for chunk in im:
+            f.write(chunk)
+
+    # Deletes all downloaded images
+    cli.remove_image(image)
+    cli.remove_image(new_image)
+
+
 if __name__ == "__main__":
     with concurrent.futures.ProcessPoolExecutor() as executor:
         """TODO: pass in a string so that I can eliminate the redundant image var
         in the_whole_shebang function"""
-        f = open(sys.argv[1], "r")
-        lines = f.readlines()
-        executor.map(the_whole_shebang, lines)
+        with open(sys.argv[1], "r") as f:
+            lines = f.readlines()
+        for line in lines:
+            if "/" not in line:
+                executor.submit(simple_image, line)
+            else:
+                executor.submit(complex_image, line)
