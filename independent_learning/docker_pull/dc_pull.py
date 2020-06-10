@@ -18,10 +18,9 @@ if not path.exists(tar_dir):
 
 
 def simple_image(image: str):
-    img_t = image.split(":")
-    img = img_t[0].strip()
-    t = img_t[1].strip()
-    image = f"{img}:{t}"
+    img, t = image.split(':')
+    image = f'{img}:{t}'
+    new_image = f"{repository}/{image}"
 
     print(f"Pulling, retagging, saving and rmi'ing: {image}")
     # Pulls the container
@@ -30,30 +29,28 @@ def simple_image(image: str):
     cli.tag(image, f"{repository}/{img}", t)
 
     new_image_name = f"{img}{t}.tar"
-    im = cli.get_image(image)
+    im = cli.get_image(new_image)
     with open(os.path.join(tar_dir, new_image_name), "wb+") as f:
         for chunk in im:
             f.write(chunk)
 
     # Deletes all downloaded images
     cli.remove_image(image)
-    cli.remove_image(f"{repository}/{image}")
+    cli.remove_image(new_image)
 
 
 def complex_image(image: str):
-    img_t = image.split(":")
-    i = img_t[0].strip()
+    i, t = image.split(":")
     img_reg = i.split("/")
     img = img_reg[1].strip()
-    t = img_t[1].strip()
     image = f"{i}:{t}"
-    new_image = f"{repository}/docker-library/{image}"
+    new_image = f"{repository}/{image}"
 
     print(f"Pulling, retagging, saving and rmi'ing: {image}")
     # Pulls the container
     cli.pull(image)
     # Tags the container with the new tag
-    cli.tag(image, f"{repository}/docker-library/{i}", t)
+    cli.tag(image, f"{repository}/{i}", t)
 
     new_image_name = f"{img}{t}.tar"
     im = cli.get_image(new_image)
@@ -73,6 +70,7 @@ if __name__ == "__main__":
         with open(sys.argv[1], "r") as f:
             lines = f.readlines()
         for line in lines:
+            line = line.strip()
             if "/" not in line:
                 executor.submit(simple_image, line)
             else:
