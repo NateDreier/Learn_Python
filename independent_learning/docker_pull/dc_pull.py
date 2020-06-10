@@ -65,8 +65,6 @@ def complex_image(image: str):
 
 if __name__ == "__main__":
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        """TODO: pass in a string so that I can eliminate the redundant image var
-        in the_whole_shebang function"""
         with open(sys.argv[1], "r") as f:
             lines = f.readlines()
         for line in lines:
