@@ -19,14 +19,13 @@ repository = sys.argv[2]
 tar_dir = os.path.join(current_dir, "move")
 
 
-
 if not path.exists(tar_dir):
     os.mkdir(tar_dir)
 
 
 def simple_image(image: str):
-    img, t = image.split(':')
-    image = f'{img}:{t}'
+    img, t = image.split(":")
+    image = f"{img}:{t}"
     new_image = f"{repository}/{image}"
 
     print(f"Pulling, retagging, saving and rmi'ing: {image}")
