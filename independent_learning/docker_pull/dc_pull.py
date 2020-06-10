@@ -55,7 +55,6 @@ def complex_image(image: str):
     # Tags the container with the new tag
     cli.tag(image, f"{repository}/docker-library/{i}", t)
 
-    print(f"tar'ing up {new_image}")
     new_image_name = f"{img}{t}.tar"
     im = cli.get_image(new_image)
     with open(os.path.join(tar_dir, new_image_name), "wb+") as f:
