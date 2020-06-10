@@ -7,10 +7,16 @@ from os import path
 import concurrent.futures  # https://docs.python.org/3/library/concurrent.futures.html
 import docker  # https://docker-py.readthedocs.io/en/stable/
 
+"""
+TODO: Take the below vars out of global
+TODO: Use Pathlib
+TODO: Use Argparse
+"""
 cli = docker.APIClient(base_url="unix://var/run/docker.sock")
 current_dir = os.getcwd()
 repository = sys.argv[2]
 tar_dir = os.path.join(current_dir, "move")
+
 
 
 if not path.exists(tar_dir):
