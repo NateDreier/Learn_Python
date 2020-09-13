@@ -21,16 +21,18 @@ perms = 0o755
 
 if path.exists(scrub_dir) is False:
     try:
-        os.mkdir(scrubbed_dir, perms)
+        os.mkdir(scrub_dir, perms)
     except OSError:
         print(f'Creation of this directory, {scrubbed_dir}, has failed')
+
 if path.exists(scrubbed_dir) is False:
     try:
         os.mkdir(scrubbed_dir, perms)
     except OSError:
         print(f'Creation of this directory, {scrubbed_dir}, has failed')
-def setup_dir():
-    for subdir, dirs, files in os.walk(scrub_dir):
+
+def setup_dir(dir):
+    for subdir, dirs, files in os.walk(dir):
         if path.exists(os.path.join(scrubbed_dir, subdir)) is False:
             try:
                 os.mkdir(os.path.join(scrubbed_dir,subdir), perms)
@@ -39,7 +41,6 @@ def setup_dir():
 
 def scrub_file(new_path, old_path):
     copyfile(old_path, new_path)
-    print("yay")
 
 def tar_dir():
     with tarfile.open("scrubbed.tar.gz", "w:gz") as tar:
@@ -53,14 +54,22 @@ def unzipper(unzip):
 if __name__ == "__main__":
     if to_scrub.endswith(".zip"):
         unzipper(to_scrub)
-    setup_dir()
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        print("moving files..")
-        for subdir, dirs, files in os.walk(scrub_dir):
-            for file in files:
-                old_path = os.path.join(subdir, file)
-                new_path = os.path.join(scrubbed_dir, subdir, file)
-                #executor.submit(scrub_file, file, new_path, old_path)
-                scrub_file(new_path, old_path)
+        setup_dir(scrub_dir)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            print("moving files..")
+            for subdir, dirs, files in os.walk(scrub_dir):
+                for file in files:
+                    old_path = os.path.join(subdir, file)
+                    new_path = os.path.join(scrubbed_dir, subdir, file)
+                    executor.submit(scrub_file, new_path, old_path)
+    else:
+        setup_dir(to_scrub)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            print("moving files..")
+            for subdir, dirs, files in os.walk(to_scrub):
+                for file in files:
+                    old_path = os.path.join(subdir, file)
+                    new_path = os.path.join(scrubbed_dir, subdir, file)
+                    executor.submit(scrub_file, new_path, old_path)
     print(f'{time.time() - start_time}')
 
