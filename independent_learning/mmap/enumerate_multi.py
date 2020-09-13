@@ -55,8 +55,8 @@ if __name__ == "__main__":
     if to_scrub.endswith(".zip"):
         unzipper(to_scrub)
         setup_dir(scrub_dir)
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            print("moving files..")
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            #print("moving files..")
             for subdir, dirs, files in os.walk(scrub_dir):
                 for file in files:
                     old_path = os.path.join(subdir, file)
@@ -64,8 +64,8 @@ if __name__ == "__main__":
                     executor.submit(scrub_file, new_path, old_path)
     else:
         setup_dir(to_scrub)
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            print("moving files..")
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            #print("moving files..")
             for subdir, dirs, files in os.walk(to_scrub):
                 for file in files:
                     old_path = os.path.join(subdir, file)

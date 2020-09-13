@@ -7,40 +7,66 @@ import concurrent.futures
 from shutil import copyfile
 import time
 import tarfile
+import zipfile
+
+#TODO: change the naming scheme of scrubbed_dir/tar to be the name of the tar with scrubbed prepended
 
 start_time = time.time()
 
-inputdir  = sys.argv[1]
-outputdir = "foo"
+to_scrub  = sys.argv[1]
+scrub_dir = "TO_SCRUB"
+scrubbed_dir = "SCRUBBED"
 
 perms = 0o755
 
-if path.exists(outputdir) is False:
+if path.exists(scrub_dir) is False:
     try:
-        os.mkdir(outputdir, perms)
+        os.mkdir(scrub_dir, perms)
     except OSError:
-        print(f'Creation of this directory, {outputdir}, has failed')
+        print(f'Creation of this directory, {scrubbed_dir}, has failed')
 
-for subdir, dirs, files in os.walk(inputdir):
-    if path.exists(os.path.join(outputdir, subdir)) is False:
-        try:
-            os.mkdir(os.path.join(outputdir,subdir), perms)
-        except OSError:
-            print(f'Creation of this directory, {outputdir}, has failed')
+if path.exists(scrubbed_dir) is False:
+    try:
+        os.mkdir(scrubbed_dir, perms)
+    except OSError:
+        print(f'Creation of this directory, {scrubbed_dir}, has failed')
 
+def setup_dir(dir):
+    for subdir, dirs, files in os.walk(dir):
+        if path.exists(os.path.join(scrubbed_dir, subdir)) is False:
+            try:
+                os.mkdir(os.path.join(scrubbed_dir,subdir), perms)
+            except OSError:
+                print(f'Creation of this directory, {scrubbed_dir}, has failed')
 
-def scrub_file(filename, new_path, old_path):
+def scrub_file(new_path, old_path):
     copyfile(old_path, new_path)
 
 def tar_dir():
     with tarfile.open("scrubbed.tar.gz", "w:gz") as tar:
-        tar.add(outputdir, arcname=outputdir)
+        tar.add(scrubbed_dir, arcname=outputdir)
+
+def unzipper(unzip):
+    with zipfile.ZipFile(to_scrub, 'r') as zip:
+        print("unzipping...")
+        zip.extractall(scrub_dir)
 
 if __name__ == "__main__":
-    for subdir, dirs, files in os.walk(inputdir):
-       for file in files:
-           old_path = os.path.join(subdir, file)
-           new_path = os.path.join(outputdir, subdir, file)
-           scrub_file(file, new_path, old_path)
-    tar_dir()
+    if to_scrub.endswith(".zip"):
+        unzipper(to_scrub)
+        setup_dir(scrub_dir)
+        #print("moving files..")
+        for subdir, dirs, files in os.walk(scrub_dir):
+            for file in files:
+                old_path = os.path.join(subdir, file)
+                new_path = os.path.join(scrubbed_dir, subdir, file)
+                scrub_file(new_path, old_path)
+    else:
+        setup_dir(to_scrub)
+        #print("moving files..")
+        for subdir, dirs, files in os.walk(to_scrub):
+            for file in files:
+                old_path = os.path.join(subdir, file)
+                new_path = os.path.join(scrubbed_dir, subdir, file)
+                scrub_file(new_path, old_path)
     print(f'{time.time() - start_time}')
