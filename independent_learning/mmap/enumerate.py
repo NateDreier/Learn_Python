@@ -44,11 +44,11 @@ def scrub_file(new_path, old_path):
 
 def tar_dir():
     with tarfile.open("scrubbed.tar.gz", "w:gz") as tar:
-        tar.add(scrubbed_dir, arcname=outputdir)
+        tar.add(scrubbed_dir, arcname=scrubbed_dir)
 
 def unzipper(unzip):
     with zipfile.ZipFile(to_scrub, 'r') as zip:
-        print("unzipping...")
+        #print("unzipping...")
         zip.extractall(scrub_dir)
 
 if __name__ == "__main__":
@@ -61,6 +61,7 @@ if __name__ == "__main__":
                 old_path = os.path.join(subdir, file)
                 new_path = os.path.join(scrubbed_dir, subdir, file)
                 scrub_file(new_path, old_path)
+        tar_dir()
     else:
         setup_dir(to_scrub)
         #print("moving files..")
@@ -69,4 +70,5 @@ if __name__ == "__main__":
                 old_path = os.path.join(subdir, file)
                 new_path = os.path.join(scrubbed_dir, subdir, file)
                 scrub_file(new_path, old_path)
+        tar_dir()
     print(f'{time.time() - start_time}')
