@@ -41,8 +41,9 @@ def setup_dir(dir):
 
 def scrub_file(new_path, file):
     with open(file, 'r') as f, open(new_path, 'w+') as o:
-        chunk = f.read()
-        o.write(chunk)
+        orig_text = f.read()
+        new_text = orig_text.replace(" the ", " eht ")
+        o.write(new_text)
 
 def tar_dir():
     with tarfile.open("scrubbed.tar.gz", "w:gz") as tar:
