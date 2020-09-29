@@ -39,8 +39,9 @@ def setup_dir(dir):
             except OSError:
                 print(f'Creation of this directory, {scrubbed_dir}, has failed')
 
-def scrub_file(new_path, old_path):
-    copyfile(old_path, new_path)
+def scrub_file(new_path, file):
+    with open(file, 'r') as f, open(new_path, 'w+') as o:
+        o.write(f.read())
 
 def tar_dir():
     with tarfile.open("scrubbed.tar.gz", "w:gz") as tar:
@@ -58,10 +59,13 @@ if __name__ == "__main__":
         #print("moving files..")
         for subdir, dirs, files in os.walk(scrub_dir):
             for file in files:
-                old_path = os.path.join(subdir, file)
+                #old_path = os.path.join(subdir, file)
                 new_path = os.path.join(scrubbed_dir, subdir, file)
-                scrub_file(new_path, old_path)
+                executor.submit(scrub_file, new_path, file)
         tar_dir()
+    elif os.path.isfile(to_scrub) is True:
+        new_dir = os.path.join(scrubbed_dir, to_scrub)
+        scrub_file(new_dir, to_scrub)
     else:
         setup_dir(to_scrub)
         #print("moving files..")

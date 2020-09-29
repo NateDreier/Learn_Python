@@ -39,8 +39,10 @@ def setup_dir(dir):
             except OSError:
                 print(f'Creation of this directory, {scrubbed_dir}, has failed')
 
-def scrub_file(new_path, old_path):
-    copyfile(old_path, new_path)
+def scrub_file(new_path, file):
+    with open(file, 'r') as f, open(new_path, 'w+') as o:
+        chunk = f.read()
+        o.write(chunk)
 
 def tar_dir():
     with tarfile.open("scrubbed.tar.gz", "w:gz") as tar:
@@ -51,6 +53,7 @@ def unzipper(unzip):
         #print("unzipping...")
         zip.extractall(scrub_dir)
 
+#TODO: built in function to check twhat type of file it is instead of using endswith
 if __name__ == "__main__":
     if to_scrub.endswith(".zip"):
         unzipper(to_scrub)
@@ -59,10 +62,13 @@ if __name__ == "__main__":
             #print("moving files..")
             for subdir, dirs, files in os.walk(scrub_dir):
                 for file in files:
-                    old_path = os.path.join(subdir, file)
+                    #old_path = os.path.join(subdir, file)
                     new_path = os.path.join(scrubbed_dir, subdir, file)
-                    executor.submit(scrub_file, new_path, old_path)
+                    executor.submit(scrub_file, new_path, file)
         tar_dir()
+    elif os.path.isfile(to_scrub) is True:
+        new_dir = os.path.join(scrubbed_dir, to_scrub)
+        scrub_file(new_dir, to_scrub)
     else:
         setup_dir(to_scrub)
         with concurrent.futures.ProcessPoolExecutor() as executor:
@@ -75,3 +81,4 @@ if __name__ == "__main__":
         tar_dir()
     print(f'{time.time() - start_time}')
 
+l
