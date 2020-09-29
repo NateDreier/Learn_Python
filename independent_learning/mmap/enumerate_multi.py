@@ -59,12 +59,11 @@ if __name__ == "__main__":
         unzipper(to_scrub)
         setup_dir(scrub_dir)
         with concurrent.futures.ProcessPoolExecutor() as executor:
-            #print("moving files..")
             for subdir, dirs, files in os.walk(scrub_dir):
                 for file in files:
-                    #old_path = os.path.join(subdir, file)
+                    old_path = os.path.join(subdir, file)
                     new_path = os.path.join(scrubbed_dir, subdir, file)
-                    executor.submit(scrub_file, new_path, file)
+                    executor.submit(scrub_file, new_path, old_path)
         tar_dir()
     elif os.path.isfile(to_scrub) is True:
         new_dir = os.path.join(scrubbed_dir, to_scrub)
@@ -72,7 +71,6 @@ if __name__ == "__main__":
     else:
         setup_dir(to_scrub)
         with concurrent.futures.ProcessPoolExecutor() as executor:
-            #print("moving files..")
             for subdir, dirs, files in os.walk(to_scrub):
                 for file in files:
                     old_path = os.path.join(subdir, file)
@@ -80,5 +78,3 @@ if __name__ == "__main__":
                     executor.submit(scrub_file, new_path, old_path)
         tar_dir()
     print(f'{time.time() - start_time}')
-
-l
