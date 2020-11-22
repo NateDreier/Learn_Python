@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route("/")  # 'http://www.google.com/'
 def home():
-    return "hello, wolrd:"
+    return "<b>This text is bold</b>"
 
 
 app.run(debug=True, host='0.0.0.0')
