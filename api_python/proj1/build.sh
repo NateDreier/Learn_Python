@@ -4,6 +4,7 @@ set -o pipefail
 set -o nounset
 #for the sake of learning, learn how to automatically incrament version numbers. for now it is manual.
 # automatically incriment based on whether it is going to be a major, minor or patch
+black api.py
 
 if [[ $(docker ps -a --format "{{.Names}}") == "api" ]]; then
     docker stop api
